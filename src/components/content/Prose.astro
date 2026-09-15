@@ -1,0 +1,12 @@
+---
+// Article typography wrapper. Applies the `.prose` component styles
+// (src/styles/global.css) to rendered Markdown/MDX content.
+interface Props {
+	class?: string;
+}
+const { class: className = '' } = Astro.props;
+---
+
+<div class:list={['prose', className]}>
+	<slot />
+</div>

@@ -1,0 +1,30 @@
+---
+interface Props {
+	href?: string;
+	variant?: 'primary' | 'secondary' | 'ghost';
+	size?: 'sm' | 'md';
+	class?: string;
+}
+
+const { href, variant = 'primary', size = 'md', class: className = '', ...rest } = Astro.props;
+const Tag = href ? 'a' : 'button';
+
+const sizes = {
+	sm: 'px-3 py-1.5 text-sm',
+	md: 'px-4 py-2 text-body',
+};
+
+const variants = {
+	primary: 'bg-accent text-accent-contrast hover:opacity-90',
+	secondary: 'border border-border text-text hover:bg-bg-subtle',
+	ghost: 'text-text-muted hover:text-text hover:bg-bg-subtle',
+};
+---
+
+<Tag
+	href={href}
+	class:list={['inline-flex items-center justify-center gap-2 rounded-md font-medium transition-colors', sizes[size], variants[variant], className]}
+	{...rest}
+>
+	<slot />
+</Tag>

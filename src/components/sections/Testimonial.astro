@@ -1,0 +1,19 @@
+---
+// Available but not used by default in the example pages — a testimonial
+// strip suits a consultancy portfolio more than a personal blog. Kept for
+// the rare case a project page wants a quoted endorsement.
+interface Props {
+	quote: string;
+	name: string;
+	role?: string;
+}
+const { quote, name, role } = Astro.props;
+---
+
+<blockquote class="not-prose border-l-2 border-accent pl-5">
+	<p class="text-lede text-text">“{quote}”</p>
+	<footer class="mt-3 text-sm text-text-muted">
+		{name}
+		{role && <span> — {role}</span>}
+	</footer>
+</blockquote>

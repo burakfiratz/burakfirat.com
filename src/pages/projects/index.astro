@@ -1,0 +1,35 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/layout/Header.astro';
+import Footer from '../../components/layout/Footer.astro';
+import PageContainer from '../../components/layout/PageContainer.astro';
+import Hero from '../../components/sections/Hero.astro';
+import ProjectsGrid from '../../components/cards/ProjectsGrid.astro';
+
+const projects = (await getCollection('projects', ({ data }) => !data.draft))
+	.sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+---
+
+<BaseLayout
+	title="Projeler — Burak Fırat"
+	description="Burak Fırat'ın geliştirdiği ve üzerinde çalıştığı projeler."
+>
+	<Header />
+
+	<main id="main">
+		<PageContainer wide>
+			<Hero
+				eyebrow="Projeler"
+				title="Yaptığım ve üzerinde çalıştığım şeyler."
+				lede="Ürünler, deneyler, açık kaynak çalışmalar ve geliştirdiğim diğer projeler."
+			/>
+
+			<section class="pb-24">
+				<ProjectsGrid projects={projects} />
+			</section>
+		</PageContainer>
+	</main>
+
+	<Footer />
+</BaseLayout>

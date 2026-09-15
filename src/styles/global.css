@@ -1,0 +1,266 @@
+@import 'tailwindcss';
+@import './tokens.css';
+
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/inter/wght-italic.css';
+@import '@fontsource-variable/fraunces/standard.css';
+@import '@fontsource-variable/fraunces/standard-italic.css';
+@import '@fontsource-variable/jetbrains-mono';
+
+@theme {
+	/* colors — read from the semantic tokens in tokens.css, which flip under [data-theme='dark'] */
+	--color-bg: var(--color-bg);
+	--color-bg-subtle: var(--color-bg-subtle);
+	--color-text: var(--color-text);
+	--color-text-muted: var(--color-text-muted);
+	--color-border: var(--color-border);
+	--color-link: var(--color-link);
+	--color-accent: var(--color-accent);
+	--color-accent-contrast: var(--color-accent-contrast);
+	--color-accent-subtle: var(--color-accent-subtle);
+	--color-code-bg: var(--color-code-bg);
+	--color-code-text: var(--color-code-text);
+	--color-focus-ring: var(--color-focus-ring);
+
+	/* font families */
+	--font-display: 'Fraunces Variable', ui-serif, Georgia, serif;
+	--font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+	--font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
+
+	/* type scale */
+	--text-display: 3.5rem;
+	--text-display--line-height: 1.1;
+	--text-display--letter-spacing: -0.02em;
+
+	--text-h1: 2.5rem;
+	--text-h1--line-height: 1.15;
+
+	--text-h2: 1.875rem;
+	--text-h2--line-height: 1.25;
+
+	--text-h3: 1.5rem;
+	--text-h3--line-height: 1.3;
+
+	--text-h4: 1.25rem;
+	--text-h4--line-height: 1.35;
+
+	--text-label: 0.875rem;
+	--text-label--line-height: 1.4;
+	--text-label--letter-spacing: 0.02em;
+
+	--text-lede: 1.125rem;
+	--text-lede--line-height: 1.75;
+
+	--text-body: 1rem;
+	--text-body--line-height: 1.7;
+
+	--text-sm: 0.875rem;
+	--text-sm--line-height: 1.5;
+
+	--text-xs: 0.75rem;
+	--text-xs--line-height: 1.4;
+	--text-xs--letter-spacing: 0.02em;
+
+	--text-code: 0.875rem;
+	--text-code--line-height: 1.6;
+
+	/* radii */
+	--radius-sm: var(--radius-sm);
+	--radius-md: var(--radius-md);
+	--radius-lg: var(--radius-lg);
+}
+
+@layer base {
+	html {
+		color-scheme: light;
+	}
+	html[data-theme='dark'] {
+		color-scheme: dark;
+	}
+	body {
+		background-color: var(--color-bg);
+		color: var(--color-text);
+		font-family: var(--font-sans);
+		font-size: var(--text-body);
+		line-height: var(--text-body--line-height);
+		-webkit-font-smoothing: antialiased;
+	}
+	h1,
+	h2,
+	h3,
+	h4 {
+		font-family: var(--font-display);
+		font-weight: 500;
+	}
+	a {
+		color: var(--color-link);
+	}
+	blockquote {
+		font-family: var(--font-display);
+		font-style: italic;
+	}
+	code,
+	pre {
+		font-family: var(--font-mono);
+	}
+	:focus-visible {
+		outline: 2px solid var(--color-focus-ring);
+		outline-offset: 2px;
+	}
+}
+
+@layer components {
+	.prose {
+		max-width: 68ch;
+		color: var(--color-text);
+		font-size: var(--text-body);
+		line-height: 1.8;
+	}
+
+	.prose > * + * {
+		margin-top: 1.5em;
+	}
+
+	.prose h2,
+	.prose h3 {
+		font-family: var(--font-display);
+		font-weight: 500;
+		letter-spacing: -0.02em;
+		color: var(--color-text);
+	}
+
+	.prose h2 {
+		margin-top: 2.8em;
+		margin-bottom: -0.4em;
+		font-size: var(--text-h2);
+		line-height: 1.15;
+	}
+
+	.prose h3 {
+		margin-top: 2.2em;
+		margin-bottom: -0.5em;
+		font-size: var(--text-h3);
+		line-height: 1.2;
+	}
+
+	.prose p {
+		line-height: 1.8;
+	}
+
+	.prose a {
+		color: var(--color-text);
+		text-decoration: underline;
+		text-decoration-color: var(--color-border);
+		text-decoration-thickness: 1px;
+		text-underline-offset: 4px;
+		transition:
+			color 150ms ease,
+			text-decoration-color 150ms ease;
+	}
+
+	.prose a:hover {
+		color: var(--color-accent);
+		text-decoration-color: var(--color-accent);
+	}
+
+	.prose strong {
+		font-weight: 600;
+		color: var(--color-text);
+	}
+
+	.prose ul,
+	.prose ol {
+		padding-left: 1.4em;
+	}
+
+	.prose li {
+		padding-left: 0.25em;
+		line-height: 1.75;
+	}
+
+	.prose li + li {
+		margin-top: 0.55em;
+	}
+
+	.prose ul {
+		list-style: disc;
+	}
+
+	.prose ol {
+		list-style: decimal;
+	}
+
+	.prose blockquote {
+		margin-left: 0;
+		border-left: 2px solid var(--color-accent);
+		padding: 0.15em 0 0.15em 1.25em;
+		color: var(--color-text-muted);
+		font-family: var(--font-display);
+		font-size: var(--text-lede);
+		line-height: 1.6;
+	}
+
+	.prose img {
+		width: 100%;
+		border-radius: var(--radius-md);
+	}
+
+	.prose figure {
+		margin-top: 2.5em;
+		margin-bottom: 2.5em;
+	}
+
+	.prose figcaption {
+		margin-top: 0.75em;
+		color: var(--color-text-muted);
+		font-size: 0.8rem;
+		line-height: 1.5;
+	}
+
+	.prose :not(pre) > code {
+		border-radius: var(--radius-sm);
+		background-color: var(--color-code-bg);
+		color: var(--color-code-text);
+		padding: 0.15em 0.4em;
+		font-family: var(--font-mono);
+		font-size: 0.85em;
+	}
+
+	.prose pre {
+		margin-top: 2em;
+		margin-bottom: 2em;
+		overflow-x: auto;
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		background-color: var(--color-code-bg);
+		color: var(--color-code-text);
+		padding: 1.25em;
+		font-family: var(--font-mono);
+		font-size: var(--text-code);
+		line-height: var(--text-code--line-height);
+	}
+
+	.prose hr {
+		margin-top: 3em;
+		margin-bottom: 3em;
+		border: none;
+		border-top: 1px solid var(--color-border);
+	}
+
+	.prose table {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: 0.9em;
+	}
+
+	.prose th,
+	.prose td {
+		border-bottom: 1px solid var(--color-border);
+		padding: 0.7em 0.5em;
+		text-align: left;
+	}
+
+	.prose th {
+		font-weight: 600;
+	}
+}

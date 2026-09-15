@@ -1,0 +1,30 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import TagBadge from '../ui/TagBadge.astro';
+
+interface Props {
+	post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { title, description, pubDate, tags } = post.data;
+const readingMinutes = Math.max(1, Math.round((post.body ?? '').split(/\s+/).length / 200));
+const formatted = pubDate.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+
+<article class="group border-b border-border py-8 first:pt-0 last:border-b-0">
+	<a href={`/blog/${post.id}`} class="block">
+		<div class="flex items-center gap-3 text-sm text-text-muted">
+			<time datetime={pubDate.toISOString()}>{formatted}</time>
+			<span aria-hidden="true">·</span>
+			<span>{readingMinutes} dk okuma</span>
+		</div>
+		<h3 class="mt-2 text-h4 font-medium text-text group-hover:text-accent">{title}</h3>
+		<p class="mt-2 text-body text-text-muted">{description}</p>
+		{tags.length > 0 && (
+			<div class="mt-4 flex flex-wrap gap-1.5">
+				{tags.map((tag) => <TagBadge>{tag}</TagBadge>)}
+			</div>
+		)}
+	</a>
+</article>

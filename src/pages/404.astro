@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import PageContainer from '../components/layout/PageContainer.astro';
+---
+
+<BaseLayout
+	title="Sayfa bulunamadı — Burak Fırat"
+	description="Aradığınız sayfa bulunamadı."
+	noindex
+>
+	<Header />
+
+	<main id="main">
+		<PageContainer>
+			<section class="flex min-h-[60vh] items-center py-20">
+				<div class="max-w-2xl">
+					<p class="font-mono text-xs uppercase tracking-[0.12em] text-text-muted">
+						404
+					</p>
+
+					<h1 class="mt-4 font-display text-display font-medium leading-[1.05] tracking-tight text-text">
+						Burada bir şey yok.
+					</h1>
+
+					<p class="mt-6 max-w-xl text-lede leading-relaxed text-text-muted">
+						Aradığın sayfa taşınmış, silinmiş ya da hiç var olmamış
+						olabilir.
+					</p>
+
+					<div class="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm">
+						<a
+							href="/"
+							class="text-text underline decoration-border underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
+						>
+							Ana sayfaya dön
+						</a>
+
+						<a
+							href="/blog"
+							class="text-text underline decoration-border underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
+						>
+							Yazılara git
+						</a>
+
+						<a
+							href="/projects"
+							class="text-text underline decoration-border underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
+						>
+							Projelere bak
+						</a>
+					</div>
+				</div>
+			</section>
+		</PageContainer>
+	</main>
+
+	<Footer />
+</BaseLayout>

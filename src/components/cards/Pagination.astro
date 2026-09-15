@@ -1,0 +1,34 @@
+---
+interface Props {
+	currentPage: number;
+	totalPages: number;
+	basePath: string;
+}
+const { currentPage, totalPages, basePath } = Astro.props;
+const prevHref = currentPage > 1 ? `${basePath}/${currentPage - 1}` : undefined;
+const nextHref = currentPage < totalPages ? `${basePath}/${currentPage + 1}` : undefined;
+---
+
+{
+	totalPages > 1 && (
+		<nav aria-label="Sayfalama" class="flex items-center justify-between border-t border-border pt-6 text-sm">
+			{prevHref ? (
+				<a href={prevHref} class="text-text hover:text-accent">
+					← Önceki
+				</a>
+			) : (
+				<span />
+			)}
+			<span class="text-text-muted">
+				Sayfa {currentPage} / {totalPages}
+			</span>
+			{nextHref ? (
+				<a href={nextHref} class="text-text hover:text-accent">
+					Sonraki →
+				</a>
+			) : (
+				<span />
+			)}
+		</nav>
+	)
+}

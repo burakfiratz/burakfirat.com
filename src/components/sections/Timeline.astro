@@ -1,0 +1,24 @@
+---
+interface Entry {
+	period: string;
+	title: string;
+	org: string;
+	description?: string;
+}
+interface Props {
+	entries: Entry[];
+}
+const { entries } = Astro.props;
+---
+
+<ol class="space-y-8 border-l border-border pl-6">
+	{entries.map((entry) => (
+		<li class="relative">
+			<span class="absolute -left-[1.6rem] top-1.5 size-2.5 rounded-full bg-accent" aria-hidden="true" />
+			<p class="text-xs text-text-muted">{entry.period}</p>
+			<p class="mt-1 text-h4 font-medium text-text">{entry.title}</p>
+			<p class="text-sm text-text-muted">{entry.org}</p>
+			{entry.description && <p class="mt-2 text-sm text-text-muted">{entry.description}</p>}
+		</li>
+	))}
+</ol>

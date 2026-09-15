@@ -1,0 +1,21 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import PostCard from './PostCard.astro';
+
+interface Props {
+	posts: CollectionEntry<'blog'>[];
+}
+const { posts } = Astro.props;
+---
+
+{
+	posts.length > 0 ? (
+		<div>
+			{posts.map((post) => (
+				<PostCard post={post} />
+			))}
+		</div>
+	) : (
+		<p class="py-12 text-center text-text-muted">Henüz yazı yok.</p>
+	)
+}

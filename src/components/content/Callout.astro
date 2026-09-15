@@ -1,0 +1,24 @@
+---
+interface Props {
+	variant?: 'note' | 'tip' | 'warning';
+	title?: string;
+}
+const { variant = 'note', title } = Astro.props;
+
+const config = {
+	note: { icon: 'ℹ️', label: title ?? 'Not' },
+	tip: { icon: '💡', label: title ?? 'İpucu' },
+	warning: { icon: '⚠️', label: title ?? 'Dikkat' },
+};
+const { icon, label } = config[variant];
+---
+
+<aside class="not-prose rounded-md border border-border bg-bg-subtle px-4 py-3">
+	<p class="mb-1 flex items-center gap-2 text-label font-semibold text-text">
+		<span aria-hidden="true">{icon}</span>
+		{label}
+	</p>
+	<div class="text-sm text-text-muted [&_p]:mt-1">
+		<slot />
+	</div>
+</aside>

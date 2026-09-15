@@ -1,0 +1,17 @@
+---
+import TagBadge from '../ui/TagBadge.astro';
+
+interface Props {
+	tags: { name: string; count: number }[];
+	class?: string;
+}
+const { tags, class: className = '' } = Astro.props;
+---
+
+<div class:list={['flex flex-wrap gap-2', className]}>
+	{tags.map((tag) => (
+		<TagBadge href={`/blog/tags/${tag.name}`}>
+			{tag.name} <span class="ml-1 text-text-muted/70">{tag.count}</span>
+		</TagBadge>
+	))}
+</div>

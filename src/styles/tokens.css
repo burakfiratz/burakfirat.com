@@ -1,0 +1,52 @@
+/*
+  Design tokens — raw palette + semantic layer.
+  Semantic tokens are what components/Tailwind consume; they are
+  reassigned wholesale under [data-theme='dark'] so nothing downstream
+  needs to know a dark mode exists.
+*/
+
+:root {
+	/* raw palette — light "paper" */
+	--paper-50: oklch(98% 0.004 90); /* ~ #FAF9F6 */
+	--paper-100: oklch(96% 0.006 85); /* ~ #F2F0EA */
+	--ink-900: oklch(20% 0.01 260); /* ~ #1C1D21 */
+	--ink-600: oklch(45% 0.01 260); /* ~ #62636B */
+	--line-200: oklch(90% 0.005 85); /* ~ #DEDCD3 */
+
+	/* accent — single deliberate "hanko" vermilion */
+	--accent-500: oklch(52% 0.16 25); /* ~ #BE3D2D */
+	--accent-100: oklch(94% 0.03 25); /* ~ #F6E4DF */
+
+	/* semantic (light, default) */
+	--color-bg: var(--paper-50);
+	--color-bg-subtle: var(--paper-100);
+	--color-text: var(--ink-900);
+	--color-text-muted: var(--ink-600);
+	--color-border: var(--line-200);
+	--color-link: var(--accent-500);
+	--color-accent: var(--accent-500);
+	--color-accent-contrast: oklch(99% 0 0);
+	--color-accent-subtle: var(--accent-100);
+	--color-code-bg: var(--paper-100);
+	--color-code-text: var(--ink-900);
+	--color-focus-ring: var(--accent-500);
+
+	/* spacing / radii / shadow */
+	--radius-sm: 0.25rem;
+	--radius-md: 0.5rem;
+	--radius-lg: 1rem;
+	--shadow-card: 0 1px 2px oklch(20% 0.01 260 / 0.06), 0 1px 1px oklch(20% 0.01 260 / 0.04);
+}
+
+[data-theme='dark'] {
+	--paper-50: oklch(18% 0.008 260); /* ~ #17181B */
+	--paper-100: oklch(22% 0.008 260); /* ~ #1E2024 */
+	--ink-900: oklch(94% 0.004 90); /* ~ #EDEBE6 */
+	--ink-600: oklch(65% 0.01 260); /* ~ #9A9BA3 */
+	--line-200: oklch(30% 0.008 260); /* ~ #303236 */
+
+	--accent-500: oklch(68% 0.15 25); /* ~ #E2694F, brightened for dark bg */
+	--accent-100: oklch(28% 0.05 25); /* ~ #3A211D */
+
+	--shadow-card: 0 1px 2px oklch(0% 0 0 / 0.3), 0 1px 1px oklch(0% 0 0 / 0.2);
+}

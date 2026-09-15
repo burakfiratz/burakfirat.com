@@ -1,0 +1,58 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/layout/Header.astro';
+import Footer from '../../../components/layout/Footer.astro';
+import PageContainer from '../../../components/layout/PageContainer.astro';
+import PostCard from '../../../components/cards/PostCard.astro';
+
+export async function getStaticPaths() {
+	const posts = await getCollection('blog', ({ data }) => !data.draft);
+	const tags = [...new Set(posts.flatMap((post) => post.data.tags))];
+
+	return tags.map((tag) => ({
+		params: { tag },
+		props: {
+			posts: posts
+				.filter((post) => post.data.tags.includes(tag))
+				.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()),
+		},
+	}));
+}
+
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+---
+
+<BaseLayout
+	title={`#${tag} — Yazılar — Burak Fırat`}
+	description={`"${tag}" etiketiyle işaretlenmiş yazılar.`}
+>
+	<Header />
+
+	<main id="main">
+		<PageContainer wide>
+			<section class="max-w-3xl py-16 sm:py-24">
+				<a href="/blog" class="text-sm text-text-muted transition-colors hover:text-text">
+					← Tüm yazılar
+				</a>
+
+				<p class="mt-10 text-label font-semibold uppercase text-accent">Etiket</p>
+
+				<h1 class="mt-3 text-display font-medium text-text">#{tag}</h1>
+
+				<p class="mt-5 max-w-prose text-lede text-text-muted">
+					{posts.length} yazı bulundu.
+				</p>
+			</section>
+
+			<section class="max-w-3xl pb-24">
+				<div>
+					{posts.map((post) => <PostCard post={post} />)}
+				</div>
+			</section>
+		</PageContainer>
+	</main>
+
+	<Footer />
+</BaseLayout>

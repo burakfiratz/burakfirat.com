@@ -1,0 +1,25 @@
+---
+import SocialLinks from '../layout/SocialLinks.astro';
+
+interface Props {
+	name?: string;
+	bio?: string;
+	class?: string;
+}
+const {
+	name = 'Burak Fırat',
+	bio = 'Yazılım mühendisi. Burada e-ticaret, dağıtık sistemler ve zaman zaman tuttuğum notları paylaşıyorum.',
+	class: className = '',
+} = Astro.props;
+---
+
+<div class:list={['flex flex-col items-start gap-4 rounded-lg border border-border bg-bg-subtle p-6 sm:flex-row sm:items-center', className]}>
+	<div class="flex size-14 shrink-0 items-center justify-center rounded-full bg-accent-subtle font-display text-h4 text-accent">
+		{name.charAt(0)}
+	</div>
+	<div class="flex-1">
+		<p class="font-display text-h4 font-medium text-text">{name}</p>
+		<p class="mt-1 text-sm text-text-muted">{bio}</p>
+	</div>
+	<SocialLinks />
+</div>

@@ -1,0 +1,22 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import ProjectsGrid from '../cards/ProjectsGrid.astro';
+import Link from '../ui/Link.astro';
+import ArrowRightIcon from '../icons/ArrowRightIcon.astro';
+
+interface Props {
+	projects: CollectionEntry<'projects'>[];
+}
+
+const { projects } = Astro.props;
+---
+
+<section class="py-12">
+	<div class="mb-6 flex items-baseline justify-between">
+		<h2 class="text-h2 font-medium text-text">Öne çıkan projeler</h2>
+		<Link href="/projects" underline={false} class="flex items-center gap-1 text-sm">
+			Tümünü gör <ArrowRightIcon class="size-3.5" />
+		</Link>
+	</div>
+	<ProjectsGrid projects={projects} />
+</section>

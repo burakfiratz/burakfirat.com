@@ -1,0 +1,25 @@
+---
+// Astro's built-in Shiki highlighter already styles markdown code fences
+// inside `.prose` (see global.css). This component progressively enhances
+// every rendered <pre> with a copy button — include it once per page that
+// renders Prose content.
+---
+
+<script>
+	for (const pre of document.querySelectorAll('.prose pre')) {
+		const button = document.createElement('button');
+		button.type = 'button';
+		button.textContent = 'Kopyala';
+		button.className =
+			'absolute right-2 top-2 rounded border border-border bg-bg px-2 py-1 text-xs text-text-muted opacity-0 transition-opacity hover:text-text group-hover:opacity-100';
+		pre.classList.add('group', 'relative');
+		pre.appendChild(button);
+
+		button.addEventListener('click', async () => {
+			const code = pre.querySelector('code')?.textContent ?? '';
+			await navigator.clipboard.writeText(code);
+			button.textContent = 'Kopyalandı';
+			setTimeout(() => (button.textContent = 'Kopyala'), 1500);
+		});
+	}
+</script>

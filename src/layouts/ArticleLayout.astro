@@ -1,0 +1,121 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import PageContainer from '../components/layout/PageContainer.astro';
+import Prose from '../components/content/Prose.astro';
+import PostMeta from '../components/content/PostMeta.astro';
+import TOC from '../components/content/TOC.astro';
+import CodeBlock from '../components/content/CodeBlock.astro';
+import AuthorBio from '../components/content/AuthorBio.astro';
+
+interface Heading {
+	depth: number;
+	slug: string;
+	text: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  updatedDate?: Date;
+  tags?: string[];
+  author?: string;
+  readingMinutes: number;
+  headings: Heading[];
+  lang?: string;
+  canonicalUrl?: string;
+}
+
+const {
+  title,
+  description,
+  pubDate,
+  updatedDate,
+  tags = [],
+  author = 'Burak Fırat',
+  readingMinutes,
+  headings,
+  lang,
+  canonicalUrl,
+} = Astro.props;
+---
+
+<BaseLayout
+	title={`${title} — Burak Fırat`}
+	description={description}
+	lang={lang}
+	canonical={canonicalUrl}
+	type="article"
+	publishedTime={pubDate}
+  	modifiedTime={updatedDate}
+  	author={author}
+  	tags={tags}
+>
+	<Header />
+
+	<main id="main">
+		<PageContainer wide>
+			<article class="py-16 sm:py-24">
+				<header class="max-w-4xl">
+					<a
+						href="/blog"
+						class="text-sm text-text-muted transition-colors hover:text-text"
+					>
+						← Tüm yazılar
+					</a>
+
+					<h1
+						class="mt-10 max-w-4xl font-display text-display font-medium leading-[1.05] tracking-tight text-text"
+					>
+						{title}
+					</h1>
+
+					<p class="mt-6 max-w-2xl text-lede leading-relaxed text-text-muted">
+						{description}
+					</p>
+
+					<div class="mt-7">
+						<PostMeta
+							pubDate={pubDate}
+							readingMinutes={readingMinutes}
+							tags={tags}
+						/>
+					</div>
+				</header>
+
+				<div
+					class:list={[
+						'mt-14 grid grid-cols-1 gap-12',
+						headings.length > 0
+							? 'xl:grid-cols-[minmax(0,1fr)_220px]'
+							: 'xl:grid-cols-[minmax(0,760px)]',
+					]}
+				>
+					<div class="min-w-0">
+						<Prose>
+							<slot />
+						</Prose>
+
+						<div class="mt-16 border-t border-border pt-10">
+							<AuthorBio />
+						</div>
+					</div>
+
+					{headings.length > 0 && (
+						<aside class="hidden xl:block">
+							<div class="sticky top-8">
+								<TOC headings={headings} />
+							</div>
+						</aside>
+					)}
+				</div>
+			</article>
+		</PageContainer>
+	</main>
+
+	<Footer />
+
+	<CodeBlock />
+</BaseLayout>

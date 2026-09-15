@@ -1,0 +1,13 @@
+---
+interface Props {
+	href: string;
+	class?: string;
+	underline?: boolean;
+}
+
+const { href, class: className = '', underline = true } = Astro.props;
+---
+
+<a href={href} class:list={['text-link transition-opacity hover:opacity-70', underline && 'underline decoration-border underline-offset-4 hover:decoration-current', className]}>
+	<slot />
+</a>

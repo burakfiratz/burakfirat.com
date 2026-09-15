@@ -1,0 +1,103 @@
+---
+// Stretch component: visual/interaction shell for a Cmd/Ctrl+K search palette,
+// styled after Astro Tone. Filters a small in-memory demo list on the client.
+// Swap the DEMO_ITEMS fetch for a real Pagefind index at build time when search
+// is wired up for the live site — this component only proves out the UX.
+const DEMO_ITEMS = [
+	{ title: 'Merhaba Dünya', href: '/blog/merhaba-dunya', kind: 'Yazı' },
+	{ title: 'Astro ile Statik Site Kurulumu', href: '/blog/astro-ile-statik-site', kind: 'Yazı' },
+	{ title: 'Tasarım Sistemi Günlüğü', href: '/blog/tasarim-sistemi-gunlugu', kind: 'Yazı' },
+	{ title: 'burakfirat.com', href: '/projects/burakfirat-com', kind: 'Proje' },
+];
+---
+
+<button
+	id="search-trigger"
+	type="button"
+	class="hidden items-center gap-2 rounded-md border border-border bg-bg px-3 py-1.5 text-sm text-text-muted transition-colors hover:border-accent hover:text-text sm:flex"
+>
+	<svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+		<circle cx="11" cy="11" r="8"></circle>
+		<path d="m21 21-4.35-4.35"></path>
+	</svg>
+	Ara
+	<kbd class="ml-2 rounded border border-border px-1.5 py-0.5 font-mono text-xs text-text-muted">⌘K</kbd>
+</button>
+
+<button
+	id="search-trigger-mobile"
+	type="button"
+	aria-label="Ara"
+	class="inline-flex size-9 items-center justify-center rounded-full text-text-muted hover:bg-bg-subtle hover:text-text sm:hidden"
+>
+	<svg class="size-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+		<circle cx="11" cy="11" r="8"></circle>
+		<path d="m21 21-4.35-4.35"></path>
+	</svg>
+</button>
+
+<dialog id="search-dialog" class="w-full max-w-lg rounded-lg border border-border bg-bg p-0 text-text shadow-card backdrop:bg-ink-900/40">
+	<div class="flex items-center gap-2 border-b border-border px-4 py-3">
+		<svg class="size-4 shrink-0 text-text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+			<circle cx="11" cy="11" r="8"></circle>
+			<path d="m21 21-4.35-4.35"></path>
+		</svg>
+		<input
+			id="search-dialog-input"
+			type="search"
+			placeholder="Yazı veya proje ara..."
+			class="w-full bg-transparent text-body text-text placeholder:text-text-muted focus:outline-none"
+		/>
+		<kbd class="rounded border border-border px-1.5 py-0.5 font-mono text-xs text-text-muted">Esc</kbd>
+	</div>
+	<ul id="search-dialog-results" class="max-h-80 overflow-y-auto p-2"></ul>
+</dialog>
+
+<script is:inline define:vars={{ items: DEMO_ITEMS }}>
+	const dialog = document.getElementById('search-dialog');
+	const input = document.getElementById('search-dialog-input');
+	const results = document.getElementById('search-dialog-results');
+
+	function render(list) {
+		results.innerHTML = list
+			.map(
+				(item) => `
+					<li>
+						<a href="${item.href}" class="flex items-center justify-between rounded-md px-3 py-2 text-sm text-text hover:bg-bg-subtle">
+							<span>${item.title}</span>
+							<span class="text-xs text-text-muted">${item.kind}</span>
+						</a>
+					</li>`,
+			)
+			.join('');
+		if (list.length === 0) {
+			results.innerHTML = '<li class="px-3 py-6 text-center text-sm text-text-muted">Sonuç bulunamadı</li>';
+		}
+	}
+
+	function open() {
+		dialog.showModal();
+		render(items);
+		input.value = '';
+		input.focus();
+	}
+
+	document.getElementById('search-trigger')?.addEventListener('click', open);
+	document.getElementById('search-trigger-mobile')?.addEventListener('click', open);
+
+	input?.addEventListener('input', () => {
+		const q = input.value.trim().toLocaleLowerCase('tr');
+		render(items.filter((item) => item.title.toLocaleLowerCase('tr').includes(q)));
+	});
+
+	document.addEventListener('keydown', (e) => {
+		if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+			e.preventDefault();
+			dialog.open ? dialog.close() : open();
+		}
+	});
+
+	dialog?.addEventListener('click', (e) => {
+		if (e.target === dialog) dialog.close();
+	});
+</script>

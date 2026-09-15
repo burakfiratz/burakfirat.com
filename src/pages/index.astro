@@ -1,17 +1,55 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import PageContainer from '../components/layout/PageContainer.astro';
+import Hero from '../components/sections/Hero.astro';
+import FeaturedWork from '../components/sections/FeaturedWork.astro';
+import PostCard from '../components/cards/PostCard.astro';
+import Link from '../components/ui/Link.astro';
+import ArrowRightIcon from '../components/icons/ArrowRightIcon.astro';
+import { getCollection } from 'astro:content';
 
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 4);
+
+const projects = (await getCollection('projects', ({ data }) => !data.draft))
+	.sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99))
+	.slice(0, 3);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout
+	title="Burak Fırat — Yazılım Mühendisi"
+	description="Burak Fırat'ın kişisel sitesi. Yazılım, e-ticaret, sistemler ve teknoloji üzerine yazılar ve projeler."
+>
+	<Header />
+
+	<main id="main">
+		<PageContainer wide>
+			<Hero
+				eyebrow="Merhaba, ben Burak"
+				title="Yazılım, sistemler ve arada kalan notlar."
+				lede="E-ticaret ve dağıtık sistemler üzerine çalışıyorum. Burada projelerimi ve öğrendiklerimi paylaşıyorum."
+				primaryCta={{ label: 'Yazıları oku', href: '/blog' }}
+				secondaryCta={{ label: 'Hakkımda', href: '/about' }}
+			/>
+
+			<FeaturedWork projects={projects} />
+
+			<section class="py-12">
+				<div class="mb-6 flex items-baseline justify-between">
+					<h2 class="text-h2 font-medium text-text">Son yazılar</h2>
+					<Link href="/blog" underline={false} class="flex items-center gap-1 text-sm">
+						Tümünü gör <ArrowRightIcon class="size-3.5" />
+					</Link>
+				</div>
+				<div class="max-w-3xl">
+					{posts.map((post) => <PostCard post={post} />)}
+				</div>
+			</section>
+		</PageContainer>
+	</main>
+
+	<Footer />
+</BaseLayout>

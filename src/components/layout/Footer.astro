@@ -1,0 +1,13 @@
+---
+import PageContainer from './PageContainer.astro';
+import SocialLinks from './SocialLinks.astro';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-border">
+	<PageContainer wide class="flex flex-col items-center gap-4 py-10 text-sm text-text-muted sm:flex-row sm:justify-between">
+		<p>&copy; {year} Burak Fırat. Tüm hakları saklıdır.</p>
+		<SocialLinks />
+	</PageContainer>
+</footer>
