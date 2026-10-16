@@ -16,6 +16,18 @@ interface Props {
   image?: string;
 }
 
+const pathname = Astro.url.pathname.replace(/\/$/, '');
+const defaultOgImage =
+	pathname === ''
+		? '/open-graph/index.png'
+		: pathname === '/blog'
+			? '/open-graph/blog.png'
+			: pathname === '/projects'
+				? '/open-graph/projects.png'
+				: pathname === '/about'
+					? '/open-graph/about.png'
+					: '/open-graph/default.png';
+
 const {
 	title,
   	description = 'Burak Fırat — yazılım, sistemler, projeler ve öğrendiklerim.',
@@ -27,7 +39,7 @@ const {
 	modifiedTime,
 	author,
 	tags = [],
-	image = '/og-image.png',
+	image = defaultOgImage,
 } = Astro.props;
 
 const siteUrl = 'https://burakfirat.com';

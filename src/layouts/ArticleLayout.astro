@@ -25,6 +25,7 @@ interface Props {
   headings: Heading[];
   lang?: string;
   canonicalUrl?: string;
+  image?: string;
 }
 
 const {
@@ -38,6 +39,7 @@ const {
   headings,
   lang,
   canonicalUrl,
+  image,
 } = Astro.props;
 ---
 
@@ -51,6 +53,7 @@ const {
   	modifiedTime={updatedDate}
   	author={author}
   	tags={tags}
+  	image={image}
 >
 	<Header />
 
