@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Salty — Design System</title>
+  <desc id="desc">Kâğıt rengi zemin üzerinde mürekkep tipografisi ve Japon mühür kırmızısıyla çizilmiş modüler arayüz bileşenleri: kart, kontrol, alan ve buton.</desc>
+  <rect width="1200" height="630" fill="#F2F0EA"/>
+
+  <!-- A seal-inspired assembly of UI primitives; deliberately not a circle. -->
+  <g transform="translate(868 76)">
+    <rect x="10" y="10" width="230" height="230" rx="11" fill="none" stroke="#BE3D2D" stroke-width="9"/>
+
+    <!-- small headline token and text line -->
+    <rect x="40" y="44" width="37" height="37" rx="3" fill="#BE3D2D"/>
+    <rect x="95" y="51" width="112" height="10" rx="5" fill="#BE3D2D"/>
+    <rect x="95" y="70" width="67" height="6" rx="3" fill="#BE3D2D" opacity="0.55"/>
+
+    <!-- outlined input -->
+    <rect x="40" y="109" width="168" height="39" rx="5" fill="none" stroke="#BE3D2D" stroke-width="6"/>
+    <rect x="54" y="125" width="79" height="6" rx="3" fill="#BE3D2D" opacity="0.5"/>
+
+    <!-- checkbox and action button -->
+    <rect x="40" y="175" width="29" height="29" rx="3" fill="none" stroke="#BE3D2D" stroke-width="6"/>
+    <path d="M48 189 L55 195 L65 183" stroke="#BE3D2D" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <rect x="95" y="175" width="113" height="30" rx="5" fill="#BE3D2D"/>
+    <rect x="119" y="187" width="65" height="6" rx="3" fill="#F2F0EA"/>
+  </g>
+
+  <text x="77" y="511" font-family="Georgia, 'Times New Roman', serif" font-size="105" font-weight="400" letter-spacing="-2.5" fill="#1C1D21">Salty</text>
+  <text x="83" y="557" font-family="'Courier New', monospace" font-size="19" letter-spacing="2.8" fill="#62636B">DESIGN SYSTEM</text>
+  <rect x="316" y="541" width="40" height="2" fill="#BE3D2D"/>
+  <text x="374" y="557" font-family="'Courier New', monospace" font-size="17" letter-spacing="1.2" fill="#62636B">WEB COMPONENTS / LIT</text>
+</svg>

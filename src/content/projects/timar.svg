@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Timar</title>
+  <desc id="desc">Kâğıt rengi üzerinde mürekkep tipografisi ve Japon mühür kırmızısıyla çizilmiş minimal kale kapısı ve üç bina seviyesi sembolü.</desc>
+  <rect width="1200" height="630" fill="#F2F0EA"/>
+  <!-- An architectural hanko: a keep, a gate, three ascending levels. -->
+  <g transform="translate(891 83)">
+    <rect x="0" y="0" width="222" height="222" rx="16" fill="none" stroke="#BE3D2D" stroke-width="10"/>
+    <!-- tiered castle / building -->
+    <path d="M48 161H172V185H48Z" fill="#BE3D2D"/>
+    <path d="M64 130H156V161H64Z" fill="#BE3D2D"/>
+    <path d="M80 100H140V130H80Z" fill="#BE3D2D"/>
+    <path d="M72 86H148" stroke="#BE3D2D" stroke-width="10" stroke-linecap="square"/>
+    <!-- gate cutout -->
+    <path d="M100 185V166C100 151 120 151 120 166V185" fill="#F2F0EA"/>
+    <!-- small resource marker -->
+    <circle cx="110" cy="49" r="10" fill="#BE3D2D"/>
+  </g>
+  <text x="77" y="511" font-family="Georgia, 'Times New Roman', serif" font-size="105" font-weight="400" letter-spacing="-2.5" fill="#1C1D21">Timar</text>
+  <text x="83" y="557" font-family="'Courier New', monospace" font-size="19" letter-spacing="2.8" fill="#62636B">BROWSER STRATEGY</text>
+  <rect x="353" y="541" width="40" height="2" fill="#BE3D2D"/>
+  <text x="412" y="557" font-family="'Courier New', monospace" font-size="17" letter-spacing="1.2" fill="#62636B">RESOURCES / TIME</text>
+</svg>
