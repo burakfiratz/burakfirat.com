@@ -4,14 +4,83 @@ import TagBadge from '../ui/TagBadge.astro';
 interface Props {
 	tags: { name: string; count: number }[];
 	class?: string;
+	limit?: number;
 }
-const { tags, class: className = '' } = Astro.props;
+const { tags, class: className = '', limit = 8 } = Astro.props;
+
+const hasMore = tags.length > limit;
+const initialTags = hasMore ? tags.slice(0, limit) : tags;
+const extraTags = hasMore ? tags.slice(limit) : [];
+const remainingCount = extraTags.length;
 ---
 
-<div class:list={['flex flex-wrap gap-2', className]}>
-	{tags.map((tag) => (
-		<TagBadge href={`/blog/tags/${tag.name}`}>
-			{tag.name} <span class="ml-1 text-text-muted/70">{tag.count}</span>
-		</TagBadge>
-	))}
+<div class:list={['tag-list-wrapper', className]}>
+	<div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
+		{initialTags.map((tag) => (
+			<TagBadge href={`/blog/tags/${tag.name}`}>
+				{tag.name} <span class="ml-1 text-text-muted/70">{tag.count}</span>
+			</TagBadge>
+		))}
+
+		{hasMore && (
+			<div class="hidden contents-when-open tag-list-extra">
+				{extraTags.map((tag) => (
+					<TagBadge href={`/blog/tags/${tag.name}`}>
+						{tag.name} <span class="ml-1 text-text-muted/70">{tag.count}</span>
+					</TagBadge>
+				))}
+			</div>
+		)}
+
+		{hasMore && (
+			<button
+				type="button"
+				class="tag-list-toggle inline-flex items-center rounded-full border border-border/80 bg-bg-subtle/50 px-2.5 py-1 text-xs font-medium text-text-muted transition-colors hover:border-accent hover:bg-accent-subtle hover:text-accent cursor-pointer"
+				data-more-text={`+${remainingCount} devamı`}
+				data-less-text="Daha az göster"
+				aria-expanded="false"
+			>
+				+{remainingCount} devamı
+			</button>
+		)}
+	</div>
 </div>
+
+<script>
+	function setupTagLists() {
+		const wrappers = document.querySelectorAll('.tag-list-wrapper');
+		wrappers.forEach((wrapper) => {
+			const toggle = wrapper.querySelector<HTMLButtonElement>('.tag-list-toggle');
+			const extra = wrapper.querySelector<HTMLElement>('.tag-list-extra');
+			if (!toggle || !extra) return;
+
+			if (toggle.dataset.initialized === 'true') return;
+			toggle.dataset.initialized = 'true';
+
+			const moreText = toggle.dataset.moreText || 'Devamı';
+			const lessText = toggle.dataset.lessText || 'Daha az';
+
+			toggle.addEventListener('click', () => {
+				const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+				if (isExpanded) {
+					extra.classList.add('hidden');
+					toggle.setAttribute('aria-expanded', 'false');
+					toggle.textContent = moreText;
+				} else {
+					extra.classList.remove('hidden');
+					toggle.setAttribute('aria-expanded', 'true');
+					toggle.textContent = lessText;
+				}
+			});
+		});
+	}
+
+	setupTagLists();
+	document.addEventListener('astro:page-load', setupTagLists);
+</script>
+
+<style>
+	:global(.contents-when-open:not(.hidden)) {
+		display: contents;
+	}
+</style>
