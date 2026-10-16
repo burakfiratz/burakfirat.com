@@ -6,6 +6,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/layout/Header.astro';
 import Footer from '../../components/layout/Footer.astro';
 import PageContainer from '../../components/layout/PageContainer.astro';
+import { createProjectSchema } from '../../utils/jsonLd';
 
 export async function getStaticPaths() {
 	const projects = await getCollection('projects', ({ data }) => !data.draft);
@@ -38,12 +39,31 @@ const yearLabel = ongoing
 	: endDate
 		? `${startDate.getFullYear()}–${endDate.getFullYear()}`
 		: `${startDate.getFullYear()}`;
+
+const canonicalUrl = new URL(Astro.url.pathname, 'https://burakfirat.com').toString();
+const imageUrl = new URL(`/open-graph/projects/${project.id}.png`, 'https://burakfirat.com').toString();
+
+const projectSchema = createProjectSchema(
+	{
+		siteUrl: 'https://burakfirat.com',
+		title,
+		description,
+		canonicalUrl,
+		imageUrl,
+	},
+	{
+		stack,
+		role,
+		links,
+	},
+);
 ---
 
 <BaseLayout
 	title={`${title} — Burak Fırat`}
 	description={description}
 	image={`/open-graph/projects/${project.id}.png`}
+	schema={projectSchema}
 >
 	<Header />
 

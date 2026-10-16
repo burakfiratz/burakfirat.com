@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import { ClientRouter } from 'astro:transitions';
 import CodeBlock from '../components/content/CodeBlock.astro';
+import { generatePageGraph } from '../utils/jsonLd';
 
 interface Props {
   title: string;
@@ -15,6 +16,8 @@ interface Props {
   author?: string;
   tags?: string[];
   image?: string;
+  breadcrumbs?: { name: string; url: string }[];
+  schema?: Record<string, unknown> | Array<Record<string, unknown>>;
 }
 
 const pathname = Astro.url.pathname.replace(/\/$/, '');
@@ -41,11 +44,70 @@ const {
 	author,
 	tags = [],
 	image = defaultOgImage,
+	breadcrumbs,
+	schema,
 } = Astro.props;
 
 const siteUrl = 'https://burakfirat.com';
 const canonicalUrl = canonical ?? new URL(Astro.url.pathname, siteUrl).toString();
 const imageUrl = new URL(image, siteUrl).toString();
+
+let resolvedBreadcrumbs = breadcrumbs;
+if (!resolvedBreadcrumbs && pathname !== '') {
+	if (pathname === '/blog') {
+		resolvedBreadcrumbs = [
+			{ name: 'Ana Sayfa', url: '/' },
+			{ name: 'Yazılar', url: '/blog' },
+		];
+	} else if (pathname === '/projects') {
+		resolvedBreadcrumbs = [
+			{ name: 'Ana Sayfa', url: '/' },
+			{ name: 'Projeler', url: '/projects' },
+		];
+	} else if (pathname === '/about') {
+		resolvedBreadcrumbs = [
+			{ name: 'Ana Sayfa', url: '/' },
+			{ name: 'Hakkımda', url: '/about' },
+		];
+	} else if (pathname.startsWith('/blog/tags/')) {
+		const tag = decodeURIComponent(pathname.replace('/blog/tags/', ''));
+		resolvedBreadcrumbs = [
+			{ name: 'Ana Sayfa', url: '/' },
+			{ name: 'Yazılar', url: '/blog' },
+			{ name: `#${tag}`, url: canonicalUrl },
+		];
+	} else if (pathname.startsWith('/blog/')) {
+		resolvedBreadcrumbs = [
+			{ name: 'Ana Sayfa', url: '/' },
+			{ name: 'Yazılar', url: '/blog' },
+			{ name: title.replace(/\s*—\s*Burak Fırat$/, ''), url: canonicalUrl },
+		];
+	} else if (pathname.startsWith('/projects/')) {
+		resolvedBreadcrumbs = [
+			{ name: 'Ana Sayfa', url: '/' },
+			{ name: 'Projeler', url: '/projects' },
+			{ name: title.replace(/\s*—\s*Burak Fırat$/, ''), url: canonicalUrl },
+		];
+	}
+}
+
+const jsonLdGraph = !noindex
+	? generatePageGraph({
+			siteUrl,
+			title,
+			description,
+			canonicalUrl,
+			imageUrl,
+			lang,
+			type,
+			publishedTime,
+			modifiedTime,
+			author,
+			tags,
+			breadcrumbs: resolvedBreadcrumbs,
+			customSchema: schema,
+		})
+	: null;
 ---
 
 <!doctype html>
@@ -107,6 +169,14 @@ const imageUrl = new URL(image, siteUrl).toString();
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={imageUrl} />
+
+		{jsonLdGraph && (
+			<script
+				type="application/ld+json"
+				is:inline
+				set:html={JSON.stringify(jsonLdGraph)}
+			/>
+		)}
 
 		<ClientRouter />
 
