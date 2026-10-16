@@ -19,21 +19,32 @@
 </button>
 
 <script>
-	const button = document.getElementById('theme-toggle')!;
-	const sun = button.querySelector('.sun-icon')!;
-	const moon = button.querySelector('.moon-icon')!;
+	function setupThemeToggle() {
+		const button = document.getElementById('theme-toggle');
+		if (!button) return;
 
-	function reflect(theme: string) {
-		sun.classList.toggle('hidden', theme === 'dark');
-		moon.classList.toggle('hidden', theme !== 'dark');
+		const sun = button.querySelector('.sun-icon');
+		const moon = button.querySelector('.moon-icon');
+
+		function reflect(theme: string) {
+			if (sun) sun.classList.toggle('hidden', theme === 'dark');
+			if (moon) moon.classList.toggle('hidden', theme !== 'dark');
+		}
+
+		reflect(document.documentElement.dataset.theme ?? 'light');
+
+		if (button.dataset.initialized === 'true') return;
+		button.dataset.initialized = 'true';
+
+		button.addEventListener('click', () => {
+			const currentTheme = document.documentElement.dataset.theme;
+			const next = currentTheme === 'dark' ? 'light' : 'dark';
+			document.documentElement.dataset.theme = next;
+			localStorage.setItem('theme', next);
+			reflect(next);
+		});
 	}
 
-	reflect(document.documentElement.dataset.theme ?? 'light');
-
-	button.addEventListener('click', () => {
-		const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-		document.documentElement.dataset.theme = next;
-		localStorage.setItem('theme', next);
-		reflect(next);
-	});
+	setupThemeToggle();
+	document.addEventListener('astro:page-load', setupThemeToggle);
 </script>

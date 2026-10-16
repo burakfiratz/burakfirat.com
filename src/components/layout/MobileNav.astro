@@ -28,10 +28,29 @@ const { items } = Astro.props as Props;
 	>
 		{
 			items.map((item) => (
-				<a href={item.href} class="rounded-md px-2 py-2.5 text-body text-text hover:bg-bg-subtle">
+				<a href={item.href} class="mobile-nav-link rounded-md px-2 py-2.5 text-body text-text hover:bg-bg-subtle">
 					{item.label}
 				</a>
 			))
 		}
 	</nav>
 </div>
+
+<script>
+	function setupMobileNav() {
+		const toggle = document.getElementById('mobile-nav-toggle') as HTMLInputElement | null;
+		if (!toggle) return;
+
+		toggle.checked = false;
+
+		const links = document.querySelectorAll('.mobile-nav-link');
+		links.forEach((link) => {
+			link.addEventListener('click', () => {
+				if (toggle) toggle.checked = false;
+			});
+		});
+	}
+
+	setupMobileNav();
+	document.addEventListener('astro:page-load', setupMobileNav);
+</script>

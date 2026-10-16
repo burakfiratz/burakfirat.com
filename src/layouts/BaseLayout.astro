@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
 import CodeBlock from '../components/content/CodeBlock.astro';
 
 interface Props {
@@ -107,15 +108,22 @@ const imageUrl = new URL(image, siteUrl).toString();
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={imageUrl} />
 
-		<script is:inline>
-			const stored = localStorage.getItem('theme');
-			const theme =
-				stored ??
-				(window.matchMedia('(prefers-color-scheme: dark)').matches
-					? 'dark'
-					: 'light');
+		<ClientRouter />
 
-			document.documentElement.dataset.theme = theme;
+		<script is:inline>
+			function applyTheme() {
+				const stored = localStorage.getItem('theme');
+				const theme =
+					stored ??
+					(window.matchMedia('(prefers-color-scheme: dark)').matches
+						? 'dark'
+						: 'light');
+
+				document.documentElement.dataset.theme = theme;
+			}
+
+			applyTheme();
+			document.addEventListener('astro:after-swap', applyTheme);
 		</script>
 	</head>
 

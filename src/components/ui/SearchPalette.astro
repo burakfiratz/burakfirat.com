@@ -49,6 +49,7 @@ const items = [
 
 <dialog
 	id="search-dialog"
+	aria-label="Site içi arama"
 	class="fixed inset-x-0 top-16 sm:top-24 z-50 mx-auto my-0 w-[calc(100%-2rem)] max-w-lg rounded-xl border border-border bg-bg p-0 text-text shadow-2xl backdrop:bg-black/50 backdrop:backdrop-blur-xs open:flex open:flex-col"
 >
 	<div class="flex items-center gap-2 border-b border-border px-4 py-3">
@@ -59,6 +60,7 @@ const items = [
 		<input
 			id="search-dialog-input"
 			type="search"
+			aria-label="Yazı veya proje ara"
 			placeholder="Yazı veya proje ara..."
 			autocomplete="off"
 			spellcheck="false"
@@ -66,111 +68,150 @@ const items = [
 		/>
 		<kbd class="rounded border border-border px-1.5 py-0.5 font-mono text-xs text-text-muted">Esc</kbd>
 	</div>
-	<ul id="search-dialog-results" class="max-h-80 overflow-y-auto p-2"></ul>
+	<ul id="search-dialog-results" class="max-h-80 overflow-y-auto p-2" role="list"></ul>
 </dialog>
 
 <script is:inline define:vars={{ items }}>
-	const dialog = document.getElementById('search-dialog');
-	const input = document.getElementById('search-dialog-input');
-	const results = document.getElementById('search-dialog-results');
-	let selectedIndex = -1;
+	function setupSearchPalette() {
+		const dialog = document.getElementById('search-dialog');
+		const input = document.getElementById('search-dialog-input');
+		const results = document.getElementById('search-dialog-results');
+		const triggerDesktop = document.getElementById('search-trigger');
+		const triggerMobile = document.getElementById('search-trigger-mobile');
+		let selectedIndex = -1;
 
-	function render(list) {
-		if (!results) return;
-		selectedIndex = -1;
-		if (list.length === 0) {
-			results.innerHTML = '<li class="px-3 py-6 text-center text-sm text-text-muted">Sonuç bulunamadı</li>';
-			return;
-		}
-		results.innerHTML = list
-			.map(
-				(item) => `
-					<li>
-						<a href="${item.href}" class="flex items-center justify-between rounded-md px-3 py-2 text-sm text-text hover:bg-bg-subtle focus:bg-bg-subtle focus:outline-none transition-colors">
-							<div class="flex flex-col gap-0.5 truncate pr-2">
-								<span class="font-medium text-text truncate">${item.title}</span>
-								${item.description ? `<span class="text-xs text-text-muted truncate">${item.description}</span>` : ''}
-							</div>
-							<span class="shrink-0 rounded border border-border px-1.5 py-0.5 text-xs text-text-muted">${item.kind}</span>
-						</a>
-					</li>`,
-			)
-			.join('');
-	}
-
-	function filterItems(query) {
-		if (!query) return items;
-		const q = query.trim().toLocaleLowerCase('tr');
-		return items.filter((item) => {
-			const title = (item.title || '').toLocaleLowerCase('tr');
-			const desc = (item.description || '').toLocaleLowerCase('tr');
-			const tags = (item.tags || []).join(' ').toLocaleLowerCase('tr');
-			return title.includes(q) || desc.includes(q) || tags.includes(q);
-		});
-	}
-
-	function updateSelection(links) {
-		links.forEach((link, idx) => {
-			if (idx === selectedIndex) {
-				link.classList.add('bg-bg-subtle');
-				link.scrollIntoView({ block: 'nearest' });
-			} else {
-				link.classList.remove('bg-bg-subtle');
-			}
-		});
-	}
-
-	function open() {
 		if (!dialog) return;
-		dialog.showModal();
-		render(items);
-		if (input) {
-			input.value = '';
-			input.focus();
+
+		function render(list) {
+			if (!results) return;
+			selectedIndex = -1;
+			if (list.length === 0) {
+				results.innerHTML = '<li class="px-3 py-6 text-center text-sm text-text-muted">Sonuç bulunamadı</li>';
+				return;
+			}
+			results.innerHTML = list
+				.map(
+					(item) => `
+						<li>
+							<a href="${item.href}" class="search-result-link flex items-center justify-between rounded-md px-3 py-2 text-sm text-text hover:bg-bg-subtle focus:bg-bg-subtle focus:outline-none transition-colors">
+								<div class="flex flex-col gap-0.5 truncate pr-2">
+									<span class="font-medium text-text truncate">${item.title}</span>
+									${item.description ? `<span class="text-xs text-text-muted truncate">${item.description}</span>` : ''}
+								</div>
+								<span class="shrink-0 rounded border border-border px-1.5 py-0.5 text-xs text-text-muted">${item.kind}</span>
+							</a>
+						</li>`,
+				)
+				.join('');
+
+			results.querySelectorAll('.search-result-link').forEach((link) => {
+				link.addEventListener('click', () => {
+					dialog.close();
+				});
+			});
 		}
-	}
 
-	document.getElementById('search-trigger')?.addEventListener('click', open);
-	document.getElementById('search-trigger-mobile')?.addEventListener('click', open);
+		function filterItems(query) {
+			if (!query) return items;
+			const q = query.trim().toLocaleLowerCase('tr');
+			return items.filter((item) => {
+				const title = (item.title || '').toLocaleLowerCase('tr');
+				const desc = (item.description || '').toLocaleLowerCase('tr');
+				const tags = (item.tags || []).join(' ').toLocaleLowerCase('tr');
+				return title.includes(q) || desc.includes(q) || tags.includes(q);
+			});
+		}
 
-	input?.addEventListener('input', () => {
-		render(filterItems(input.value));
-	});
+		function updateSelection(links) {
+			links.forEach((link, idx) => {
+				if (idx === selectedIndex) {
+					link.classList.add('bg-bg-subtle');
+					link.scrollIntoView({ block: 'nearest' });
+				} else {
+					link.classList.remove('bg-bg-subtle');
+				}
+			});
+		}
 
-	input?.addEventListener('keydown', (e) => {
-		const links = results?.querySelectorAll('a');
-		if (!links || links.length === 0) return;
-
-		if (e.key === 'ArrowDown') {
-			e.preventDefault();
-			selectedIndex = (selectedIndex + 1) % links.length;
-			updateSelection(links);
-		} else if (e.key === 'ArrowUp') {
-			e.preventDefault();
-			selectedIndex = (selectedIndex - 1 + links.length) % links.length;
-			updateSelection(links);
-		} else if (e.key === 'Enter') {
-			if (selectedIndex >= 0 && selectedIndex < links.length) {
-				e.preventDefault();
-				links[selectedIndex].click();
+		function open() {
+			if (!dialog) return;
+			if (typeof dialog.showModal === 'function') {
+				dialog.showModal();
+			} else {
+				dialog.setAttribute('open', '');
+			}
+			render(items);
+			if (input) {
+				input.value = '';
+				input.focus();
 			}
 		}
-	});
 
-	document.addEventListener('keydown', (e) => {
-		if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-			e.preventDefault();
-			dialog?.open ? dialog.close() : open();
-		}
-	});
+		triggerDesktop?.addEventListener('click', open);
+		triggerMobile?.addEventListener('click', open);
 
-	dialog?.addEventListener('click', (e) => {
-		const rect = dialog.getBoundingClientRect();
-		const isInDialog =
-			rect.top <= e.clientY &&
-			e.clientY <= rect.top + rect.height &&
-			rect.left <= e.clientX &&
-			e.clientX <= rect.left + rect.width;
-		if (!isInDialog) dialog.close();
-	});
+		input?.addEventListener('input', () => {
+			render(filterItems(input.value));
+		});
+
+		input?.addEventListener('keydown', (e) => {
+			const links = results?.querySelectorAll('a');
+			if (!links || links.length === 0) return;
+
+			if (e.key === 'ArrowDown') {
+				e.preventDefault();
+				selectedIndex = (selectedIndex + 1) % links.length;
+				updateSelection(links);
+			} else if (e.key === 'ArrowUp') {
+				e.preventDefault();
+				selectedIndex = (selectedIndex - 1 + links.length) % links.length;
+				updateSelection(links);
+			} else if (e.key === 'Enter') {
+				if (selectedIndex >= 0 && selectedIndex < links.length) {
+					e.preventDefault();
+					dialog.close();
+					links[selectedIndex].click();
+				}
+			}
+		});
+
+		dialog.addEventListener('click', (e) => {
+			const rect = dialog.getBoundingClientRect();
+			const isInDialog =
+				rect.top <= e.clientY &&
+				e.clientY <= rect.top + rect.height &&
+				rect.left <= e.clientX &&
+				e.clientX <= rect.left + rect.width;
+			if (!isInDialog) dialog.close();
+		});
+	}
+
+	if (!window.__search_palette_keydown_bound) {
+		window.__search_palette_keydown_bound = true;
+		document.addEventListener('keydown', (e) => {
+			if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+				e.preventDefault();
+				const dialog = document.getElementById('search-dialog');
+				if (dialog) {
+					if (dialog.open) {
+						dialog.close();
+					} else {
+						if (typeof dialog.showModal === 'function') {
+							dialog.showModal();
+						} else {
+							dialog.setAttribute('open', '');
+						}
+						const input = document.getElementById('search-dialog-input');
+						if (input) {
+							input.value = '';
+							input.focus();
+						}
+					}
+				}
+			}
+		});
+	}
+
+	setupSearchPalette();
+	document.addEventListener('astro:page-load', setupSearchPalette);
 </script>
