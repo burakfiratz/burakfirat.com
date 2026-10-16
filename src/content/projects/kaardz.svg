@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Kaardz — Görsel Kart Editörü</title>
+  <desc id="desc">Krem kağıt üzerinde iki üst üste kart, çizgisel kart alanları ve kırmızı mühür; minimalist Kaardz blog kapağı.</desc>
+  <rect width="1200" height="630" fill="#F2F0EA"/>
+
+  <!-- Quiet editorial guides -->
+  <g fill="none" stroke="#DCD8CF" stroke-width="1">
+    <path d="M 77 76 H 1123"/>
+    <path d="M 77 588 H 1123"/>
+    <path d="M 739 76 V 588" stroke-dasharray="3 11"/>
+  </g>
+  <g font-family="'Courier New',monospace" font-size="13" fill="#77746E" letter-spacing="2.8">
+    <text x="80" y="65">BF / PROJECT ARCHIVE</text>
+    <text x="1122" y="65" text-anchor="end">2022 — 04</text>
+  </g>
+
+  <!-- Symbolic overlapping cards: purely vector, no screenshot -->
+  <g transform="rotate(-11 892 284)" fill="none" stroke="#9B968C" stroke-width="2">
+    <rect x="778" y="134" width="245" height="340" rx="9"/>
+    <rect x="799" y="156" width="203" height="160" rx="4"/>
+    <path d="M 799 346 H 989 M 799 366 H 960 M 799 387 H 976" stroke="#BDB7AC"/>
+    <circle cx="821" cy="438" r="12"/>
+    <circle cx="851" cy="438" r="12"/>
+    <circle cx="881" cy="438" r="12"/>
+  </g>
+
+  <!-- Front card with stamp-red visual field and inset geometric mark -->
+  <g>
+    <rect x="855" y="125" width="247" height="352" rx="10" fill="#F2F0EA" stroke="#1C1D21" stroke-width="3"/>
+    <rect x="875" y="146" width="207" height="191" rx="3" fill="#BE3D2D"/>
+    <g stroke="#F2F0EA" stroke-width="4" fill="none" stroke-linejoin="round" stroke-linecap="square">
+      <path d="M 926 294 V 219 L 978 185 L 1031 219 V 294"/>
+      <path d="M 926 219 L 978 251 L 1031 219"/>
+      <path d="M 978 251 V 294"/>
+    </g>
+    <g stroke="#1C1D21" stroke-width="2" fill="none">
+      <path d="M 876 361 H 1055 M 876 383 H 1027"/>
+      <rect x="877" y="415" width="47" height="27" rx="13.5"/>
+      <rect x="937" y="415" width="47" height="27" rx="13.5"/>
+      <rect x="997" y="415" width="47" height="27" rx="13.5"/>
+    </g>
+    <circle cx="900" cy="428.5" r="5" fill="#BE3D2D"/>
+    <circle cx="960" cy="428.5" r="5" fill="#1C1D21"/>
+    <circle cx="1020" cy="428.5" r="5" fill="#1C1D21"/>
+  </g>
+
+  <!-- Simple text hierarchy matching existing site covers -->
+  <text x="77" y="463" font-family="Georgia,'Times New Roman',serif" font-size="115" letter-spacing="-3" fill="#1C1D21">Kaardz</text>
+  <text x="83" y="521" font-family="'Courier New',monospace" font-size="19" fill="#62636B" letter-spacing="2.8">VUE / CARD EDITOR</text>
+  <path d="M 83 548 H 121" stroke="#BE3D2D" stroke-width="3"/>
+  <text x="139" y="554" font-family="'Courier New',monospace" font-size="16" fill="#62636B" letter-spacing="1.0">BİLEŞEN · ÖNİZLEME · GÖRSEL</text>
+  <text x="1122" y="609" text-anchor="end" font-family="'Courier New',monospace" font-size="12" letter-spacing="1.4" fill="#77746E">DESIGN EXPLORATION / 001</text>
+</svg>

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+<title id="title">Procedural Terrain Generator</title>
+<desc id="desc">Kâğıt renginde zeminde geometrik kırmızı ve mürekkep rengi karo grupları, negatif boşluklardan oluşan bir vadi silüeti ve Terrain tipografisi.</desc>
+<rect width="1200" height="630" fill="#F2F0EA"/>
+<g fill="none" stroke="#1C1D21" opacity="0.13" stroke-width="1"><path d="M79 74H341"/><path d="M79 81H190"/></g>
+<text x="80" y="112" font-family="'Courier New', monospace" font-size="15" letter-spacing="4" fill="#62636B">PROJECT / 2022</text>
+<g aria-label="Geometric tile terrain motif">
+<rect x="927" y="92" width="45" height="45" fill="#1C1D21"/>
+    <rect x="979" y="92" width="45" height="45" fill="#1C1D21"/>
+    <rect x="875" y="144" width="45" height="45" fill="#1C1D21"/>
+    <rect x="927" y="144" width="45" height="45" fill="#1C1D21"/>
+    <rect x="979" y="144" width="45" height="45" fill="#BE3D2D"/>
+    <rect x="1031" y="144" width="45" height="45" fill="#BE3D2D"/>
+    <rect x="823" y="196" width="45" height="45" fill="#1C1D21"/>
+    <rect x="875" y="196" width="45" height="45" fill="#1C1D21"/>
+    <rect x="927" y="196" width="45" height="45" fill="#BE3D2D"/>
+    <rect x="979" y="196" width="45" height="45" fill="#BE3D2D"/>
+    <rect x="1031" y="196" width="45" height="45" fill="#BE3D2D"/>
+    <rect x="1083" y="196" width="45" height="45" fill="#BE3D2D"/>
+    <rect x="823" y="248" width="45" height="45" fill="#1C1D21"/>
+    <rect x="875" y="248" width="45" height="45" fill="#BE3D2D"/>
+    <rect x="927" y="248" width="45" height="45" fill="#BE3D2D"/>
+    <rect x="979" y="248" width="45" height="45" fill="#F2F0EA" stroke="#BE3D2D" stroke-width="2"/>
+    <rect x="1031" y="248" width="45" height="45" fill="#BE3D2D"/>
+    <rect x="1083" y="248" width="45" height="45" fill="#BE3D2D"/>
+    <rect x="1135" y="248" width="45" height="45" fill="#1C1D21"/>
+    <rect x="823" y="300" width="45" height="45" fill="#1C1D21"/>
+    <rect x="875" y="300" width="45" height="45" fill="#BE3D2D"/>
+    <rect x="927" y="300" width="45" height="45" fill="#F2F0EA" stroke="#BE3D2D" stroke-width="2"/>
+    <rect x="979" y="300" width="45" height="45" fill="#F2F0EA" stroke="#BE3D2D" stroke-width="2"/>
+    <rect x="1031" y="300" width="45" height="45" fill="#F2F0EA" stroke="#BE3D2D" stroke-width="2"/>
+    <rect x="1083" y="300" width="45" height="45" fill="#BE3D2D"/>
+    <rect x="1135" y="300" width="45" height="45" fill="#1C1D21"/>
+    <rect x="875" y="352" width="45" height="45" fill="#1C1D21"/>
+    <rect x="927" y="352" width="45" height="45" fill="#F2F0EA" stroke="#BE3D2D" stroke-width="2"/>
+    <rect x="979" y="352" width="45" height="45" fill="#F2F0EA" stroke="#BE3D2D" stroke-width="2"/>
+    <rect x="1031" y="352" width="45" height="45" fill="#F2F0EA" stroke="#BE3D2D" stroke-width="2"/>
+    <rect x="1083" y="352" width="45" height="45" fill="#1C1D21"/>
+    <rect x="927" y="404" width="45" height="45" fill="#1C1D21"/>
+    <rect x="979" y="404" width="45" height="45" fill="#1C1D21"/>
+    <rect x="1031" y="404" width="45" height="45" fill="#1C1D21"/>
+</g>
+<text x="77" y="511" font-family="Georgia, 'Times New Roman', serif" font-size="105" font-weight="400" letter-spacing="-2.5" fill="#1C1D21">Terrain</text>
+<text x="83" y="557" font-family="'Courier New', monospace" font-size="19" letter-spacing="2.8" fill="#62636B">PROCEDURAL GENERATION</text>
+<rect x="425" y="541" width="40" height="2" fill="#BE3D2D"/>
+<text x="484" y="557" font-family="'Courier New', monospace" font-size="17" letter-spacing="1.2" fill="#62636B">PYTHON / ARCADE</text>
+</svg>
